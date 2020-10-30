@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request,jsonify
 from flask_cors import CORS, cross_origin
 
-from funciones import validar_usuarios,crear_usuario
+from funciones import validar_usuarios,crear_usuario,datos_tabla
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'faasdasdf1231asdad123'
@@ -48,7 +48,16 @@ def registro():
         }]
         return jsonify(error)
 
+@app.route("/tabla", methods=['GET'])
+@cross_origin()
+def tabla():
+    try:
+        retorno = datos_tabla()
+        return jsonify(retorno)
 
+    except Exception as e:
+        error = f"Ha ocurrido un error {e}"
+        return error
 
 
 if __name__=='__main__':
